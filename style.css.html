@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotina Matinal - Detalhes</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: #0a0a0a; color: #f0f0f0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .back-btn { display: inline-block; color: #3b82f6; text-decoration: none; margin-bottom: 20px; font-weight: 600; }
+        .back-btn:hover { text-decoration: underline; }
+        
+        header { background: #141414; border: 1px solid #262626; padding: 24px; border-radius: 10px; margin-bottom: 24px; }
+        .badge { background: #1e3a8a; color: #93c5fd; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        h1 { margin-top: 10px; font-size: 1.8rem; color: #fff; }
+        
+        .section { background: #141414; border: 1px solid #262626; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        h2 { font-size: 1.2rem; margin-bottom: 12px; color: #3b82f6; }
+        
+        .checklist-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #222; cursor: pointer; }
+        .checklist-item:last-child { border-bottom: none; }
+        input[type="checkbox"] { width: 18px; height: 18px; margin-top: 4px; accent-color: #3b82f6; cursor: pointer; }
+        .item-text strong { display: block; color: #fff; }
+        .item-text span { font-size: 0.9rem; color: #999; }
+        .completed-text { text-decoration: line-through; opacity: 0.5; }
+
+        .btn-complete {
+            width: 100%; padding: 14px; background: #3b82f6; color: #fff; border: none;
+            border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
+        .btn-complete.done { background: #10b981; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">← Voltar para todas as rotinas</a>
+
+    <header>
+        <span class="badge">06:30 - 08:00 • Energia e Clareza</span>
+        <h1>Rotina Matinal</h1>
+        <p style="color: #aaa; margin-top: 8px;">O objetivo deste bloco é ativar o corpo e definir a direção do dia antes de consumir informações externas (notícias, redes sociais ou e-mails).</p>
+    </header>
+
+    <div class="section">
+        <h2>Passo a Passo Aprofundado</h2>
+        
+        <label class="checklist-item">
+            <input type="checkbox" class="step-check">
+            <div class="item-text">
+                <strong>1. Hidratação Imediata (500ml de água)</strong>
+                <span>Após horas de sono, o corpo está desidratado. Beber água antes do café acelera o metabolismo e melhora o estado de alerta.</span>
+            </div>
+        </label>
+
+        <label class="checklist-item">
+            <input type="checkbox" class="step-check">
+            <div class="item-text">
+                <strong>2. Exposição à Luz Natural (10 min)</strong>
+                <span>Abra a janela ou vá para fora. A luz solar sinaliza ao cérebro para interromper a melatonina e iniciar a produção natural de cortisol.</span>
+            </div>
+        </label>
+
+        <label class="checklist-item">
+            <input type="checkbox" class="step-check">
+            <div class="item-text">
+                <strong>3. Mobilidade Articular (10 min)</strong>
+                <span>Alongamento leve para coluna, pescoço e quadris para remover a rigidez muscular da noite.</span>
+            </div>
+        </label>
+
+        <label class="checklist-item">
+            <input type="checkbox" class="step-check">
+            <div class="item-text">
+                <strong>4. Definir as 3 Prioridades do Dia</strong>
+                <span>Anote no papel as 3 únicas tarefas que, se concluídas, farão o dia valer a pena.</span>
+            </div>
+        </label>
+    </div>
+
+    <button id="btn-finalizar" class="btn-complete">Marcar Rotina como Concluída</button>
+</div>
+
+<script>
+    const checkboxes = document.querySelectorAll('.step-check');
+    const btnFinalizar = document.getElementById('btn-finalizar');
+
+    // Efeito visual ao marcar cada item
+    checkboxes.forEach(box => {
+        box.addEventListener('change', function() {
+            const textDiv = this.nextElementSibling;
+            if (this.checked) {
+                textDiv.classList.add('completed-text');
+            } else {
+                textDiv.classList.remove('completed-text');
+            }
+        });
+    });
+
+    // Verifica estado salvo
+    if (localStorage.getItem('rotina_manha') === 'concluida') {
+        btnFinalizar.textContent = '✓ Rotina Concluída (Clique para desmarcar)';
+        btnFinalizar.classList.add('done');
+    }
+
+    // Salva no navegador para atualizar o card na página inicial
+    btnFinalizar.addEventListener('click', () => {
+        if (localStorage.getItem('rotina_manha') === 'concluida') {
+            localStorage.removeItem('rotina_manha');
+            btnFinalizar.textContent = 'Marcar Rotina como Concluída';
+            btnFinalizar.classList.remove('done');
+        } else {
+            localStorage.setItem('rotina_manha', 'concluida');
+            btnFinalizar.textContent = '✓ Rotina Concluída (Clique para desmarcar)';
+            btnFinalizar.classList.add('done');
+        }
+    });
+</script>
+
+</body>
+</html>

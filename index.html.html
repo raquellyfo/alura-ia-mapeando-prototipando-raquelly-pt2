@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Rotinas</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: #0a0a0a; color: #f0f0f0; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; margin: 0 auto; }
+        header { margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+        h1 { font-size: 1.8rem; color: #ffffff; }
+        p.subtitle { color: #888; font-size: 0.95rem; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        
+        .card {
+            background-color: #141414;
+            border: 1px solid #262626;
+            border-radius: 10px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .card:hover { border-color: #3b82f6; transform: translateY(-2px); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .tag { font-size: 0.75rem; background: #1f1f1f; color: #3b82f6; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .status { font-size: 0.75rem; color: #666; }
+        .status.done { color: #10b981; font-weight: bold; }
+        .card h2 { font-size: 1.25rem; margin-bottom: 8px; color: #fff; }
+        .card p { font-size: 0.9rem; color: #aaa; margin-bottom: 16px; }
+        .card-footer { font-size: 0.85rem; color: #3b82f6; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Painel de Rotinas</h1>
+        <p class="subtitle">Selecione um card para abrir a página detalhada da rotina.</p>
+    </header>
+
+    <div class="grid">
+        <!-- Card 1 -->
+        <a href="manha.html" class="card" data-rotina="manha">
+            <div>
+                <div class="card-header">
+                    <span class="tag">06:30 - 08:00</span>
+                    <span class="status" id="status-manha">Pendente</span>
+                </div>
+                <h2>Rotina Matinal</h2>
+                <p>Despertar sem telas, hidratação, alongamento rápido e planejamento do dia.</p>
+            </div>
+            <div class="card-footer">Abrir detalhes →</div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="foco.html" class="card" data-rotina="foco">
+            <div>
+                <div class="card-header">
+                    <span class="tag">09:00 - 12:00</span>
+                    <span class="status" id="status-foco">Pendente</span>
+                </div>
+                <h2>Bloco de Foco Profundo</h2>
+                <p>Execução das tarefas prioritárias sem interrupções usando ciclos de tempo.</p>
+            </div>
+            <div class="card-footer">Abrir detalhes →</div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="noite.html" class="card" data-rotina="noite">
+            <div>
+                <div class="card-header">
+                    <span class="tag">21:30 - 22:30</span>
+                    <span class="status" id="status-noite">Pendente</span>
+                </div>
+                <h2>Desaceleração Noturna</h2>
+                <p>Preparação do ambiente, revisão rápida e higiene do sono.</p>
+            </div>
+            <div class="card-footer">Abrir detalhes →</div>
+        </a>
+    </div>
+</div>
+
+<script>
+    // Verifica no armazenamento local se alguma rotina já foi concluída hoje
+    document.addEventListener("DOMContentLoaded", () => {
+        const rotinas = ['manha', 'foco', 'noite'];
+        rotinas.forEach(id => {
+            if (localStorage.getItem('rotina_' + id) === 'concluida') {
+                const statusEl = document.getElementById('status-' + id);
+                if (statusEl) {
+                    statusEl.textContent = '✓ Concluída';
+                    statusEl.classList.add('done');
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
